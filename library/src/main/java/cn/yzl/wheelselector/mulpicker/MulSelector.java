@@ -1,11 +1,13 @@
-package cn.yzl.wheelselector.addresspicker;
+package cn.yzl.wheelselector.mulpicker;
 
 import android.content.Context;
+import android.support.annotation.FloatRange;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -23,76 +25,77 @@ import cn.yzl.wheelselector.wheel.views.WheelView;
 /**
  * Created by 易点付 伊 on 2016/10/11.
  */
-public class AddressPickerView extends PopupWindow {
-    private Window window;
-    private int layout;
+public class MulSelector extends PopupWindow {
+    private int itemLayout;
+    protected Window window;
+    protected int layout;
 
     //一些相关的配置
 
-    private float textSize = 24;
+    protected float textSize = 24;
 
     /**
      * 主数据,主要存储 省市区数据
      */
-    private List<Map<String, Object>> mData;
-    private View view;
+    protected List<Map<String, Object>> mData;
+    protected View view;
 
-    private Context context;
+    protected Context context;
 
-    private WheelView proviceWV;
-    private WheelView cityWV;
-    private WheelView districtWV;
-    private CityAdapter proviceAdapter;
-    private CityAdapter cityAdapter;
-    private CityAdapter disAdapter;
+    protected WheelView proviceWV;
+    protected WheelView cityWV;
+    protected WheelView districtWV;
+    protected CityAdapter proviceAdapter;
+    protected CityAdapter cityAdapter;
+    protected CityAdapter disAdapter;
 
-    private Map<String, Object> selProvice;
-    private Map<String, Object> selCity;
-    private Map<String, Object> selDis;
+    protected Map<String, Object> selProvice;
+    protected Map<String, Object> selCity;
+    protected Map<String, Object> selDis;
 
-    private List<Map<String, Object>> disData;
-    private List<Map<String, Object>> cityData;
-    private List<Map<String, Object>> proviceData;
+    protected List<Map<String, Object>> disData;
+    protected List<Map<String, Object>> cityData;
+    protected List<Map<String, Object>> proviceData;
 
-    private Map<String, Object> noSelData;
+    protected Map<String, Object> noSelData;
 
-    private AddressConfirmListener mConfirmListener;
+    protected AddressConfirmListener mConfirmListener;
 
     /**
      * 是否显示区,默认显示
      */
-    private boolean showDis;
+    protected boolean showDis;
 
     //省市区 在map中对应的id的名字的key
 
     /**
      * 是否 自定义了各个省市区的 key
      */
-    private boolean isCustomKey;
+    protected boolean isCustomKey;
 
-    private String pIdKey;
-    private String pNameKey;
-    private String cIdKey;
-    private String cNameKey;
-    private String dIdKey;
-    private String dNameKey;
+    protected String pIdKey;
+    protected String pNameKey;
+    protected String cIdKey;
+    protected String cNameKey;
+    protected String dIdKey;
+    protected String dNameKey;
 
-    private String cityKey;
+    protected String cityKey;
 
-    private String disKey;
-    private TextView confirmBut;
-    private TextView cancelBut;
-    private TextView title_tv;
-    private View titleV;
+    protected String disKey;
+    protected TextView confirmBut;
+    protected TextView cancelBut;
+    protected TextView title_tv;
+    protected View titleV;
 
     /**
      * @param context
      * @param data    数据源
      * @param showDis 是否显示区
      */
-    public AddressPickerView(Context context,
-                             List<Map<String, Object>> data, Window window,
-                             boolean showDis) {
+    public MulSelector(Context context,
+                       List<Map<String, Object>> data, Window window,
+                       boolean showDis) {
         super(context);
         this.context = context;
         this.mData = data;
@@ -110,16 +113,17 @@ public class AddressPickerView extends PopupWindow {
      * @param showDis 是否显示区
      * @param layout  自定义视图
      */
-    public AddressPickerView(Context context,
-                             List<Map<String, Object>> data,
-                             Window window,
-                             boolean showDis, @LayoutRes int layout) {
+    public MulSelector(Context context,
+                       List<Map<String, Object>> data,
+                       Window window,
+                       boolean showDis, @LayoutRes int layout, @LayoutRes int itemLayout) {
         super(context);
         this.context = context;
         this.mData = data;
         this.showDis = showDis;
         this.window = window;
         this.layout = layout;
+        this.itemLayout = itemLayout;
         initData();
         initView();
     }
@@ -139,11 +143,11 @@ public class AddressPickerView extends PopupWindow {
      * @param disKey   包含的 区县 所在字段
      * @param showDis  是否显示区
      */
-    public AddressPickerView(Context context, List<Map<String, Object>> data,
-                             String pIdKey, String pNameKey, String cIdKey,
-                             String cNameKey, String dIdKey,
-                             String dNameKey, String cityKey,
-                             String disKey, boolean showDis, Window window) {
+    public MulSelector(Context context, List<Map<String, Object>> data,
+                       String pIdKey, String pNameKey, String cIdKey,
+                       String cNameKey, String dIdKey,
+                       String dNameKey, String cityKey,
+                       String disKey, boolean showDis, Window window) {
         super(context);
         this.isCustomKey = true;
         this.context = context;
@@ -180,11 +184,14 @@ public class AddressPickerView extends PopupWindow {
      * @param disKey   包含的 区县 所在字段
      * @param showDis  是否显示区
      */
-    public AddressPickerView(Context context, List<Map<String, Object>> data,
-                             String pIdKey, String pNameKey, String cIdKey,
-                             String cNameKey, String dIdKey,
-                             String dNameKey, String cityKey,
-                             String disKey, boolean showDis, Window window, @LayoutRes int layout) {
+    public MulSelector(Context context, List<Map<String, Object>> data,
+                       String pIdKey, String pNameKey, String cIdKey,
+                       String cNameKey, String dIdKey,
+                       String dNameKey, String cityKey,
+                       String disKey, boolean showDis,
+                       Window window,
+                       @LayoutRes int layout,
+                       @LayoutRes int itemLayout) {
         super(context);
         this.isCustomKey = true;
         this.context = context;
@@ -197,6 +204,7 @@ public class AddressPickerView extends PopupWindow {
         this.cNameKey = cNameKey;
         this.showDis = showDis;
         this.window = window;
+        this.itemLayout = itemLayout;
         if (showDis) {
             this.dIdKey = dIdKey;
             this.dNameKey = dNameKey;
@@ -209,7 +217,7 @@ public class AddressPickerView extends PopupWindow {
     /**
      * 初始化数据并且初始化 适配器
      */
-    private void initData() {
+    protected void initData() {
         noSelData = new HashMap<>();
         if (isCustomKey) {
             noSelData.put("id", "0");
@@ -243,18 +251,18 @@ public class AddressPickerView extends PopupWindow {
         }
 
         if (isCustomKey) {
-            proviceAdapter = new CityAdapter(context, proviceData, pNameKey);
+            proviceAdapter = new CityAdapter(context, proviceData, pNameKey, itemLayout);
         } else {
-            proviceAdapter = new CityAdapter(context, proviceData, "province_name");
+            proviceAdapter = new CityAdapter(context, proviceData, "province_name", itemLayout);
         }
 
         cityData = new ArrayList<>();
         cityData.add(noSelData);
 
         if (isCustomKey) {
-            cityAdapter = new CityAdapter(context, cityData, cNameKey);
+            cityAdapter = new CityAdapter(context, cityData, cNameKey, itemLayout);
         } else {
-            cityAdapter = new CityAdapter(context, cityData, "city_name");
+            cityAdapter = new CityAdapter(context, cityData, "city_name", itemLayout);
         }
 
         if (showDis) {
@@ -262,15 +270,15 @@ public class AddressPickerView extends PopupWindow {
             disData.add(noSelData);
 
             if (isCustomKey) {
-                disAdapter = new CityAdapter(context, disData, dNameKey);
+                disAdapter = new CityAdapter(context, disData, dNameKey, itemLayout);
             } else {
-                disAdapter = new CityAdapter(context, disData, "district_name");
+                disAdapter = new CityAdapter(context, disData, "district_name", itemLayout);
             }
         }
     }
 
-    private void initView() {
-        view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_city_seletor, null);
+    protected void initView() {
+        view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_mul_seletor, null);
 
         //初始化 WheelView
         proviceWV = (WheelView) view.findViewById(R.id.id_province);
@@ -292,7 +300,7 @@ public class AddressPickerView extends PopupWindow {
         cancelBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddressPickerView.this.dismiss();
+                MulSelector.this.dismiss();
             }
         });
         //确认 按钮
@@ -305,7 +313,7 @@ public class AddressPickerView extends PopupWindow {
                     } else {
                         mConfirmListener.confirm(selProvice, selCity, null);
                     }
-                    AddressPickerView.this.dismiss();
+                    MulSelector.this.dismiss();
                 } else {
                     throw new NullPointerException("AddressConfirmListener is null");
                 }
@@ -402,6 +410,14 @@ public class AddressPickerView extends PopupWindow {
                 }
             });
         }
+
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setWindowAlph(1);
+            }
+        });
+
         setContentView(view);
         // 设置SelectPicPopupWindow的View
         this.setContentView(view);
@@ -449,7 +465,7 @@ public class AddressPickerView extends PopupWindow {
 
 
     //选择省份后 更新 城市数据
-    private void updateCityData() {
+    protected void updateCityData() {
         if (selProvice == null) {
             cityData.clear();
             cityData.add(noSelData);
@@ -462,9 +478,10 @@ public class AddressPickerView extends PopupWindow {
             } else {
                 temp = (List<Map<String, Object>>) selProvice.get("city");
             }
-
-            for (int i = 0; i < temp.size(); i++) {
-                cityData.add(temp.get(i));
+            if (temp != null) {
+                for (int i = 0; i < temp.size(); i++) {
+                    cityData.add(temp.get(i));
+                }
             }
         }
         if (isCustomKey) {
@@ -480,7 +497,7 @@ public class AddressPickerView extends PopupWindow {
     }
 
     //选择城市后 更新 区数据
-    private void updateDisData() {
+    protected void updateDisData() {
         if (selCity == null) {
             disData.clear();
             disData.add(noSelData);
@@ -493,8 +510,10 @@ public class AddressPickerView extends PopupWindow {
             } else {
                 temp = (List<Map<String, Object>>) selCity.get("district");
             }
-            for (int i = 0; i < temp.size(); i++) {
-                disData.add(temp.get(i));
+            if (temp != null) {
+                for (int i = 0; i < temp.size(); i++) {
+                    disData.add(temp.get(i));
+                }
             }
         }
         if (isCustomKey) {
@@ -519,8 +538,9 @@ public class AddressPickerView extends PopupWindow {
         this.textSize = textSize;
     }
 
-    public void show(View parent, int gravity) {
-        super.showAtLocation(parent, gravity, 0, 0);
+    public void show(int gravity) {
+        super.showAtLocation(window.getDecorView().getRootView(), gravity, 0, 0);
+        setWindowAlph(0.7f);
     }
 
     public TextView getConfirmBut() {
@@ -537,5 +557,11 @@ public class AddressPickerView extends PopupWindow {
 
     public View getTitleV() {
         return titleV;
+    }
+
+    protected void setWindowAlph(@FloatRange(from = 0, to = 1) float alphaNumb) {
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.alpha = alphaNumb;
+        window.setAttributes(params);
     }
 }

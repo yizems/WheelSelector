@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="35dip"
-    android:gravity="center"
     android:background="@color/white"
+    android:gravity="center"
     android:orientation="horizontal">
 
     <TextView
-        android:background="@color/white"
-        android:id="@+id/item_tv_city_selector"
+        android:id="@+id/item_tv_single_selector"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:ellipsize="end"
-        android:textColor="#3B3B3B"
         android:gravity="center"
         android:maxLines="1"
-        />
+        android:textColor="#3B3B3B" />
 </LinearLayout>

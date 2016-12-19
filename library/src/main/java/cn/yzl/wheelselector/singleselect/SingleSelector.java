@@ -1,11 +1,13 @@
 package cn.yzl.wheelselector.singleselect;
 
 import android.content.Context;
+import android.support.annotation.FloatRange;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -20,38 +22,39 @@ import cn.yzl.wheelselector.wheel.views.WheelView;
 /**
  * Created by 易点付 伊 on 2016/10/11.
  */
-public class WheelSelector extends PopupWindow {
-    private Window window;
-    private int layout;
+public class SingleSelector extends PopupWindow {
+    private int itemLayout;
+    protected Window window;
+    protected int layout;
 
     //一些相关的配置
 
-    private float textSize = 24;
+    protected float textSize = 24;
 
     /**
      * 主数据,主要存储 省市区数据
      */
-    private View view;
+    protected View view;
 
-    private Context context;
+    protected Context context;
 
-    private WheelView wheelView;
-    private ItemAdapter adapter;
+    protected WheelView wheelView;
+    protected ItemAdapter adapter;
 
-    private String[] data;
+    protected String[] data;
 
-    private ItemConfirmListener mConfirmListener;
-    private String title;
-    private TextView titleTV;
-    private TextView cancelBut;
-    private TextView confirmBut;
-    private View titleV;
+    protected ItemConfirmListener mConfirmListener;
+    protected String title;
+    protected TextView titleTV;
+    protected TextView cancelBut;
+    protected TextView confirmBut;
+    protected View titleV;
 
     /**
      * @param context
      * @param data    数据源
      */
-    public WheelSelector(Context context, String[] data, String title, Window window) {
+    public SingleSelector(Context context, String[] data, String title, Window window) {
         super(context);
         this.context = context;
         this.data = data;
@@ -68,7 +71,7 @@ public class WheelSelector extends PopupWindow {
      * @param data    数据源
      * @param layout  自定义视图
      */
-    public WheelSelector(Context context, String[] data, String title, Window window, @LayoutRes int layout) {
+    public SingleSelector(Context context, String[] data, String title, Window window, @LayoutRes int layout, @LayoutRes int itemLayout) {
         super(context);
         this.context = context;
         this.data = data;
@@ -76,6 +79,7 @@ public class WheelSelector extends PopupWindow {
         this.layout = 0;
         this.window = window;
         this.layout = layout;
+        this.itemLayout = itemLayout;
         initData();
         initView();
     }
@@ -83,11 +87,11 @@ public class WheelSelector extends PopupWindow {
     /**
      * 初始化数据并且初始化 适配器
      */
-    private void initData() {
-        adapter = new ItemAdapter(context, data);
+    protected void initData() {
+        adapter = new ItemAdapter(context, data, itemLayout);
     }
 
-    private void initView() {
+    protected void initView() {
         view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_single_seletor, null);
 
         //初始化 WheelView
@@ -103,7 +107,7 @@ public class WheelSelector extends PopupWindow {
         cancelBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WheelSelector.this.dismiss();
+                SingleSelector.this.dismiss();
             }
         });
         //确认 按钮
@@ -112,7 +116,7 @@ public class WheelSelector extends PopupWindow {
             public void onClick(View v) {
                 if (mConfirmListener != null) {
                     mConfirmListener.confirm(wheelView.getCurrentItem(), data[wheelView.getCurrentItem()]);
-                    WheelSelector.this.dismiss();
+                    SingleSelector.this.dismiss();
                 } else {
                     throw new NullPointerException("AddressConfirmListener is null");
                 }
@@ -141,6 +145,12 @@ public class WheelSelector extends PopupWindow {
         });
 
 
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setWindowAlph(1f);
+            }
+        });
         setContentView(view);
         // 设置SelectPicPopupWindow的View
         this.setContentView(view);
@@ -205,6 +215,7 @@ public class WheelSelector extends PopupWindow {
 
     public void show(int gravity) {
         super.showAtLocation(window.getDecorView().getRootView(), gravity, 0, 0);
+        setWindowAlph(0.7f);
     }
 
     /**
@@ -236,5 +247,12 @@ public class WheelSelector extends PopupWindow {
 
     public View getTitleV() {
         return titleV;
+    }
+
+
+    protected void setWindowAlph(@FloatRange(from = 0, to = 1) float alphaNumb) {
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.alpha = alphaNumb;
+        window.setAttributes(params);
     }
 }

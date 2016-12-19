@@ -1,4 +1,4 @@
-package cn.yzl.wheelselector.addresspicker;
+package cn.yzl.wheelselector.mulpicker;
 
 
 import android.content.Context;
@@ -18,13 +18,21 @@ import cn.yzl.wheelselector.wheel.adapters.AbstractWheelTextAdapter;
 
 public class CityAdapter extends AbstractWheelTextAdapter {
 
-    private final String key;
-    private Context context;
-    private List<Map<String, Object>> data;
+    protected final String key;
+    protected Context context;
+    protected List<Map<String, Object>> data;
 
     public CityAdapter(Context context, List<Map<String, Object>> data, String key) {
         // itemview 的id.以及显示的textview的id
-        super(context, R.layout.item_city_selector, R.id.item_tv_city_selector, 0, 22, 16);
+        super(context, R.layout.item_mul_selector, R.id.item_tv_mul_selector, 0, 22, 16);
+        this.context = context;
+        this.data = data;
+        this.key = key;
+    }
+
+    public CityAdapter(Context context, List<Map<String, Object>> data, String key, int itemLayout) {
+        // itemview 的id.以及显示的textview的id
+        super(context, itemLayout != 0 ? itemLayout : R.layout.item_mul_selector, R.id.item_tv_mul_selector, 0, 22, 16);
         this.context = context;
         this.data = data;
         this.key = key;

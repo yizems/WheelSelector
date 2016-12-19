@@ -15,12 +15,19 @@ import cn.yzl.wheelselector.wheel.adapters.AbstractWheelTextAdapter;
 
 public class ItemAdapter extends AbstractWheelTextAdapter {
 
-    private Context context;
-    private String[] data;
+    protected Context context;
+    protected String[] data;
 
     public ItemAdapter(Context context, String[] data) {
         // itemview 的id.以及显示的textview的id
-        super(context, R.layout.item_pop_single_selector, R.id.item_tv_city_selector, 0, 22, 16);
+        super(context, R.layout.item_pop_single_selector, R.id.item_tv_single_selector, 0, 22, 16);
+        this.context = context;
+        this.data = data;
+    }
+
+    public ItemAdapter(Context context, String[] data, int itemLayout) {
+        // itemview 的id.以及显示的textview的id
+        super(context, itemLayout != 0 ? itemLayout : R.layout.item_pop_single_selector, R.id.item_tv_single_selector, 0, 22, 16);
         this.context = context;
         this.data = data;
     }

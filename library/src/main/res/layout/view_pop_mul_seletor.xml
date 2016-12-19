@@ -2,7 +2,7 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#b0000000"
+    android:background="#00000000"
     android:orientation="vertical">
 
     <LinearLayout
@@ -63,27 +63,27 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <cn.edianpay.bricknet.widge.wheel.views.WheelView
+                <cn.yzl.wheelselector.wheel.views.WheelView
                     android:id="@+id/id_province"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                </cn.edianpay.bricknet.widge.wheel.views.WheelView>
+                </cn.yzl.wheelselector.wheel.views.WheelView>
 
-                <cn.edianpay.bricknet.widge.wheel.views.WheelView
+                <cn.yzl.wheelselector.wheel.views.WheelView
                     android:id="@+id/id_city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                </cn.edianpay.bricknet.widge.wheel.views.WheelView>
+                </cn.yzl.wheelselector.wheel.views.WheelView>
 
-                <cn.edianpay.bricknet.widge.wheel.views.WheelView
+                <cn.yzl.wheelselector.wheel.views.WheelView
                     android:id="@+id/id_district"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"></cn.edianpay.bricknet.widge.wheel.views.WheelView>
+                    android:layout_weight="1"></cn.yzl.wheelselector.wheel.views.WheelView>
             </LinearLayout>
 
             <LinearLayout

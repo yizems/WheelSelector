@@ -2,8 +2,9 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#30000000"
+    android:background="#00000000"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,13 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="#EEEEEE">
+
             <TextView
                 android:id="@+id/tv_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/no_bg"
                 android:layout_marginRight="15dp"
+                android:background="@drawable/no_bg"
                 android:gravity="center_vertical"
                 android:text="确定"
                 android:textColor="@color/main_color"
@@ -52,16 +54,42 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <cn.edianpay.bricknet.widge.wheel.views.WheelView
-                android:id="@+id/item_wheel"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
-        </LinearLayout>
+                android:orientation="horizontal">
+
+                <cn.yzl.wheelselector.wheel.views.WheelView
+                    android:id="@+id/item_wheel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#CCCCCC" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="40dp"
+                    android:background="#CCCCCC" />
+
+            </LinearLayout>
+
+        </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

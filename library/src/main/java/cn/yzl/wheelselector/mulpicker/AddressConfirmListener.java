@@ -1,4 +1,4 @@
-package cn.yzl.wheelselector.addresspicker;
+package cn.yzl.wheelselector.mulpicker;
 
 import java.util.Map;
 
