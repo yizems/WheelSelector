@@ -8,9 +8,9 @@
 ![image](https://github.com/yizeliang/WheelSelector/raw/master/img/2.png)
 
 
-## 2 使用方法_先不写了
+## 2 使用方法
 
-
+请看demo
 
 ## 依赖添加
 
