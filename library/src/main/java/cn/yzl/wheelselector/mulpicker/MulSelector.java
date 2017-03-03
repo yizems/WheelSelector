@@ -278,7 +278,7 @@ public class MulSelector extends PopupWindow {
     }
 
     protected void initView() {
-        view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_mul_seletor, null);
+        view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_mul_seletor_wheelselector_yzl_cn, null);
 
         //初始化 WheelView
         proviceWV = (WheelView) view.findViewById(R.id.id_province);

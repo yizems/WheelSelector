@@ -92,7 +92,7 @@ public class SingleSelector extends PopupWindow {
     }
 
     protected void initView() {
-        view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_single_seletor, null);
+        view = LayoutInflater.from(context).inflate(layout != 0 ? layout : R.layout.view_pop_single_seletor_wheelselector_yzl_cn, null);
 
         //初始化 WheelView
         wheelView = (WheelView) view.findViewById(R.id.item_wheel);
