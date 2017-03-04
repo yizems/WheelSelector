@@ -109,6 +109,18 @@ public class WheelView extends View {
     private List<OnWheelScrollListener> scrollingListeners = new LinkedList<OnWheelScrollListener>();
     private List<OnWheelClickedListener> clickingListeners = new LinkedList<OnWheelClickedListener>();
 
+    public List<OnWheelChangedListener> getChangingListeners() {
+        return changingListeners;
+    }
+
+    public List<OnWheelScrollListener> getScrollingListeners() {
+        return scrollingListeners;
+    }
+
+    public List<OnWheelClickedListener> getClickingListeners() {
+        return clickingListeners;
+    }
+
     /**
      * Constructor
      */

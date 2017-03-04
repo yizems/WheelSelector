@@ -309,9 +309,10 @@ public class MulSelector extends PopupWindow {
             public void onClick(View v) {
                 if (mConfirmListener != null) {
                     if (showDis) {
-                        mConfirmListener.confirm(selProvice, selCity, selDis);
+                        mConfirmListener.confirm(proviceData.get(proviceWV.getCurrentItem()), cityData.get(cityWV.getCurrentItem()),
+                                disData.get(districtWV.getCurrentItem()));
                     } else {
-                        mConfirmListener.confirm(selProvice, selCity, null);
+                        mConfirmListener.confirm(proviceData.get(proviceWV.getCurrentItem()), cityData.get(cityWV.getCurrentItem()), null);
                     }
                     MulSelector.this.dismiss();
                 } else {
@@ -320,11 +321,6 @@ public class MulSelector extends PopupWindow {
             }
         });
 
-        proviceWV.setViewAdapter(proviceAdapter);
-        cityWV.setViewAdapter(cityAdapter);
-        if (showDis) {
-            districtWV.setViewAdapter(disAdapter);
-        }
 
         //省份 数据变化
         proviceWV.addChangingListener(new OnWheelChangedListener() {
@@ -436,9 +432,25 @@ public class MulSelector extends PopupWindow {
         this.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.no_bg));
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimBottom);
+
+        proviceWV.setViewAdapter(proviceAdapter);
+        cityWV.setViewAdapter(cityAdapter);
+        if (showDis) {
+            districtWV.setViewAdapter(disAdapter);
+        }
+
+        proviceWV.setCurrentItem(0);
         setTextviewSize(proviceAdapter.getItemText(proviceWV.getCurrentItem()).toString(), proviceAdapter);
+        selProvice = proviceData.get(proviceWV.getCurrentItem());
+        selCity = null;
+        selDis = null;
+        updateCityData();
+
         setTextviewSize(cityAdapter.getItemText(cityWV.getCurrentItem()).toString(), cityAdapter);
-        setTextviewSize(disAdapter.getItemText(districtWV.getCurrentItem()).toString(), disAdapter);
+
+        if (showDis) {
+            setTextviewSize(disAdapter.getItemText(districtWV.getCurrentItem()).toString(), disAdapter);
+        }
     }
 
 
